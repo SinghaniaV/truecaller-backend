@@ -1,0 +1,15 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+    <h1>Add</h1>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+    <h1>Welcome, {{ request.user.first_name }}</h1>
+
+    <ul>
+        <li>Username: {{ request.user.username }}</li>
+        <li>Email: {{ request.user.email }}</li>
+    </ul>
+
+    <ul>
+        {% for identity in identities %}
+            <li> Name: {{ identity.first_name }} {{ identity.last_name }}, Phone: {{ identity.phone }} </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add' %}">Add Contacts</a> <br>
+    <a href="{% url 'search_users' %}">Search Contacts</a> <br>
+    <a href="{% url 'logout' %}">Log Out</a>
+{% endblock %}
