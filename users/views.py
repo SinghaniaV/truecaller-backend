@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.db import IntegrityError
 from django.urls import reverse
@@ -17,10 +18,21 @@ def register_view(request):  # Redirect to login page after successful registrat
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
+
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             email = form.cleaned_data.get('email')
             phone = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            if User.objects.filter(username=phone).exists():
+                return render(request, "users/register.html", {
+                    "message": "This phone number is already in use.",
+                    "form": form
+                })
+            
+            user = User.objects.create_user(username=phone, email=email, first_name=first_name, last_name=last_name, password=password)
+            user.save()
 
             Registered.objects.create(
                 first_name=first_name,
@@ -37,7 +49,7 @@ def register_view(request):  # Redirect to login page after successful registrat
     return render(request, 'users/register.html', {'form': form})
 
 
-def form_view(request):
+def add_contact_view(request):
     if request.method == 'POST':
         form = AddToGlobalForm(request.POST)
         if form.is_valid():
@@ -85,7 +97,7 @@ def form_view(request):
     return render(request, 'users/add.html', {'form': form})
 
 
-def search_users(request):
+def search_users_view(request):
     form = SearchForm(request.GET or None)
     identity = Identity.objects.all()
     registered_users = Registered.objects.all()
