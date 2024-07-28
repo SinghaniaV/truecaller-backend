@@ -14,7 +14,7 @@ class Identity(models.Model):
         unique_together = ('first_name', 'last_name', 'phone', 'email', 'is_spam')
 
     def __str__(self):
-        return f"{self.first_name}"
+        return f"{self.phone}"
 
 
 class Registered(models.Model):
@@ -32,5 +32,8 @@ class Registered(models.Model):
 class RegisteredToSaved(models.Model):
     """model for relating registered user with their saved contacts."""
 
-    phone = models.ForeignKey(Registered, on_delete=models.CASCADE)
+    registered_user = models.ForeignKey(Registered, on_delete=models.CASCADE)
     contact_saved = models.ForeignKey(Identity, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f"{self.registered_user} saved {self.contact_saved}"

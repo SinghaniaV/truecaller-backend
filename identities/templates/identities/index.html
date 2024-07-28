@@ -12,7 +12,14 @@
     <h1>Registered Users</h1>
     <ul>
         {% for reg in registered %}
-            <li> Name: {{ reg.first_name }} {{ reg.last_name }}, Phone: {{ reg.phone }} </li>
+            <li> Name: {{ reg.first_name }} {{ reg.last_name }}, Email: {{ reg.email}}, Phone: {{ reg.phone }} </li>
+        {% endfor %}
+    </ul>
+
+    <h1>Registered To Saved</h1>
+    <ul>
+        {% for reg in registered_to_saved %}
+            <li> Registered User: {{ reg.registered_user.phone }}, Contact Saved: {{reg.contact_saved.phone }} </li>
         {% endfor %}
     </ul>
 

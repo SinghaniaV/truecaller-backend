@@ -15,16 +15,21 @@
             {% for user in users %}
                 <li>{{ user.first_name }} {{ user.last_name }} <br> 
                     Phone: {{ user.phone }} <br> 
+
+                    {% if email %} 
+                        Email: {{ email }} <br>
+                    {% endif %}
+
                     {% if user.is_spam %}
-                        Marked Spam: True
+                        Marked Spam: True 
                     {% else %}
                         Marked Spam: False
-                    {% endif %}
+                    {% endif %} 
                 </li>
             {% endfor %}
         </ul>
     {% else %}
     <p>No users found.</p>
     {% endif %}
-
+    <a href="{% url 'index' %}">Home</a> <br>
 {% endblock %}

@@ -84,7 +84,7 @@ def add_contact_view(request):
             )
 
             RegisteredToSaved.objects.create(
-                phone=registered_user,
+                registered_user=registered_user,
                 contact_saved=contact_saved
             )
             
@@ -99,19 +99,33 @@ def add_contact_view(request):
 
 def search_users_view(request):
     form = SearchForm(request.GET or None)
-    identity = Identity.objects.all()
-    registered_users = Registered.objects.all()
-    registered_to_saved = Registered.objects.all() 
-    
-        # TODO: the person’s email is only displayed if the person is a registered user and the user who is searching is in the person’s contact list. We have to search registered_to_saved for this.
+
+    # TODO: the person’s email is only displayed if the person is a registered user and the user who is searching is in the person’s contact list. We have to search registered_to_saved for this.
 
     if form.is_valid():
         first_name = form.cleaned_data.get('first_name')
         last_name = form.cleaned_data.get('last_name')
         phone = form.cleaned_data.get('phone')
 
+        try:
+            is_registered = Registered.objects.get(pk=phone)
+            has_saved = RegisteredToSaved.objects.filter(registered_user__phone=phone)
+        except Registered.DoesNotExist:
+            is_registered = None
+            has_saved = None
+
+        if phone and is_registered and has_saved.first().contact_saved.phone == request.user.username:
+            email = Registered.objects.filter(pk=phone).first().email
+            users = Registered.objects.filter(phone=phone) 
+            return render(request, 'users/search_users.html', {
+                'form': form,
+                'users': users,
+                'email': email
+
+            })
+
         if phone:
-            users = registered_users.filter(phone__icontains=phone)
+            users = Identity.objects.filter(phone=phone)
             if users:
                 return render(request, 'users/search_users.html', {
                 'form': form,
@@ -119,21 +133,21 @@ def search_users_view(request):
             })
 
             else:
-                users = identity.filter(first_name__icontains=first_name)
+                users = Identity.objects.filter(first_name__icontains=first_name)
                 return render(request, 'users/search_users.html', {
                     'form': form,
                     'users': users
                 })
             
         if first_name:
-            users = identity.filter(first_name__icontains=first_name)
+            users = Identity.objects.filter(first_name__icontains=first_name)
             return render(request, 'users/search_users.html', {
                     'form': form,
                     'users': users
                 })
 
         if last_name:
-            users = identity.filter(last_name__icontains=last_name)
+            users = Identity.objects.filter(last_name__icontains=last_name)
             return render(request, 'users/search_users.html', {
                     'form': form,
                     'users': users
