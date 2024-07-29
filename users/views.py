@@ -131,28 +131,13 @@ def search_users_view(request):
                 'form': form,
                 'users': users
             })
-
-            else:
-                users = Identity.objects.filter(first_name__icontains=first_name)
-                return render(request, 'users/search_users.html', {
-                    'form': form,
-                    'users': users
-                })
             
-        if first_name:
+        if phone or first_name or last_name:
             users = Identity.objects.filter(first_name__icontains=first_name)
             return render(request, 'users/search_users.html', {
                     'form': form,
                     'users': users
                 })
-
-        if last_name:
-            users = Identity.objects.filter(last_name__icontains=last_name)
-            return render(request, 'users/search_users.html', {
-                    'form': form,
-                    'users': users
-                })
-
 
     return render(request, 'users/search_users.html', {
         'form': form,
