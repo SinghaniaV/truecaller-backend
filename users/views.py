@@ -14,7 +14,7 @@ def index(request):
     return render(request, "users/user.html")
 
 
-def register_view(request):  # Redirect to login page after successful registration
+def register_view(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -100,7 +100,7 @@ def add_contact_view(request):
 def search_users_view(request):
     form = SearchForm(request.GET or None)
 
-    # TODO: the person’s email is only displayed if the person is a registered user and the user who is searching is in the person’s contact list. We have to search registered_to_saved for this.
+    # the person’s email is only displayed if the person is a registered user and the user who is searching is in the person’s contact list. We have to search registered_to_saved for this.
 
     if form.is_valid():
         first_name = form.cleaned_data.get('first_name')
