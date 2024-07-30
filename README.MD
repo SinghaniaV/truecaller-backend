@@ -1,24 +1,15 @@
-# Coding Task
+## Overview
 
-## Task Overview
-
-Create a REST API to be consumed by a mobile app, similar to popular apps that identify spam numbers or allow searching for a person's name by their phone number.
-
-**Preferred Frameworks:**
-- Strong preference for Django.
-- Secondary preference for Flask or Rails.
+Created a REST API to be consumed by a mobile app, similar to popular apps that identify spam numbers or allow searching for a person's name by their phone number.
 
 **Database Requirements:**
 - Use a relational database with an ORM for persistence.
-- NoSQL or raw SQL queries will not be evaluated.
-
+  
 ## Terminology and Assumptions
 
 - **Registered User**: A user who has signed up on the app.
 - **Contacts**: Each registered user can have zero or more personal contacts.
 - **Global Database**: Combination of all registered users and their personal contacts.
-
-**Note:** You only need to create the REST API endpoints; the UI will be built by someone else.
 
 ## Data Storage Requirements
 
@@ -57,7 +48,9 @@ Create a REST API to be consumed by a mobile app, similar to popular apps that i
 
 ## Data Population
 
-- Write a script or facility to populate the database with a significant amount of random, sample data for testing.
+- A script to populate the database with a significant amount of random, sample data for testing.
+
+---
 
 # Instructions for running the App:
 `cd callerID`
@@ -68,16 +61,16 @@ Create a REST API to be consumed by a mobile app, similar to popular apps that i
 
 ## There are 5 routes in users app:
 
-`/users/login` - for logging in the registered user
+- `/users/login` - for logging in the registered user
 
-`/users/logout` - for logging out the loggedin user
+- `/users/logout` - for logging out the loggedin user
 
-`/users/add_users` - for adding contacts for a loggedin user
+- `/users/add_users` - for adding contacts for a loggedin user
 
-`/users/register` - for registering a user
+- `/users/register` - for registering a user
 
-`/users/search_users` - for searching the database
+- `/users/search_users` - for searching the database
 
 ## There is only one route in identities app (for testing purposes):
 
-`/identities/` - displays all the registered users and the global database with their saved contacts
+- `/identities/` - displays all the registered users and the global database with their saved contacts
