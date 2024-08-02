@@ -1,4 +1,4 @@
-# CallerID App
+# CallerID
 
 This project is a REST API designed to be consumed by a mobile app, similar to popular apps that identify spam numbers or allow searching for a person's name by their phone number. 
 
